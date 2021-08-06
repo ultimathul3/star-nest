@@ -51,20 +51,20 @@ void main(void)
     float s = .4, fade = .2;
     vec3 v = vec3(0.4);
     
-	for (int r = 0; r < volsteps; r++)
-	{
+    for (int r = 0; r < volsteps; r++)
+    {
         vec3 p= from + s * dir * .5;
         p = abs(vec3(tile) - mod(p, vec3(tile * 2.))); // tiling fold
         float pa, a = pa = 0.;
         
-		for (int i = 0; i < iterations; i++)
-		{ 
+        for (int i = 0; i < iterations; i++)
+        { 
             p = abs(p) / dot(p, p) - formuparam; // the magic formula
             a += abs(length(p) - pa); // absolute sum of average change
             pa = length(p);
         }
         
-		float dm = max(0., darkmatter - a*a * .001); // dark matter
+        float dm = max(0., darkmatter - a*a * .001); // dark matter
         a *= a*a*2.; // add contrast
         if (r > 3) fade *= 1. - dm; // dark matter, don't render near
 
@@ -74,6 +74,6 @@ void main(void)
         s += stepsize;
     }
     
-	v = mix(vec3(length(v)), v, saturation); //color adjust
+    v = mix(vec3(length(v)), v, saturation); //color adjust
     gl_FragColor = vec4(v * .01, 1.);    
 }
